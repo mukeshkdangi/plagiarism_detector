@@ -1,6 +1,6 @@
 package com.tripadvisor.utils.plagiarismdetector.interfaces;
 
-import com.tripadvisor.utils.plagiarismdetector.CustomException.ApplicationException;
+import com.tripadvisor.utils.plagiarismdetector.customexception.ApplicationException;
 
 public abstract class Detector {
     abstract public void preProcess() throws ApplicationException;

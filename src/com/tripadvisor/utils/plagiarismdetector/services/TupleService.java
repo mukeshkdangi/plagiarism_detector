@@ -1,9 +1,9 @@
 package com.tripadvisor.utils.plagiarismdetector.services;
 
 import com.tripadvisor.utils.plagiarismdetector.Constants;
-import com.tripadvisor.utils.plagiarismdetector.CustomException.ApplicationException;
-import com.tripadvisor.utils.plagiarismdetector.CustomException.Error;
-import com.tripadvisor.utils.plagiarismdetector.CustomException.ErrorCodes;
+import com.tripadvisor.utils.plagiarismdetector.customexception.ApplicationException;
+import com.tripadvisor.utils.plagiarismdetector.customexception.Error;
+import com.tripadvisor.utils.plagiarismdetector.customexception.ErrorCodes;
 import com.tripadvisor.utils.plagiarismdetector.pojo.NTuple;
 
 import java.io.IOException;

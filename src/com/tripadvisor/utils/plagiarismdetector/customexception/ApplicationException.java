@@ -1,4 +1,4 @@
-package com.tripadvisor.utils.plagiarismdetector.CustomException;
+package com.tripadvisor.utils.plagiarismdetector.customexception;
 
 public class ApplicationException extends Exception {
 

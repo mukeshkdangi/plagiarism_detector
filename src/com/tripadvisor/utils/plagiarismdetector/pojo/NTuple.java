@@ -6,16 +6,16 @@ import java.util.List;
 public class NTuple {
     List<String> wordsInNTuple = new ArrayList<>();
 
-    public void addWordInNTuple(String word) {
-        this.wordsInNTuple.add(word);
-    }
-
-    public String getWord(int wordPosition) {
-        return this.wordsInNTuple.get(wordPosition);
-    }
-
     public List<String> getWordsInTuple() {
-        return wordsInNTuple;
+        return this.wordsInNTuple;
+    }
+
+    public void addWordInNTuple(String word) {
+        getWordsInTuple().add(word);
+    }
+
+    public String getWordAtIndex(int wordPosition) {
+        return this.wordsInNTuple.get(wordPosition);
     }
 
     public int getTupleSize() {

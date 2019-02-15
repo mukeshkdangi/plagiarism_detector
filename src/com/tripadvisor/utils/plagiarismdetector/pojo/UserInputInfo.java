@@ -8,7 +8,7 @@ import com.tripadvisor.utils.plagiarismdetector.Constants;
  * size(default 3)
  */
 
-// We can use lombok to getter and setter
+// We could use lombok for getter and setter
 
 public class UserInputInfo {
 
@@ -18,7 +18,6 @@ public class UserInputInfo {
     private String comparisionFileName;
 
     private int tupleSize = Constants.DEFAULT_TUPLE_SIZE;
-
 
 
     public String getSynonymsFileName() {

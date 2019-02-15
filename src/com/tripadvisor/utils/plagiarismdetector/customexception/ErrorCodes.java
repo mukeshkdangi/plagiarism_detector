@@ -1,11 +1,12 @@
-package com.tripadvisor.utils.plagiarismdetector.CustomException;
+package com.tripadvisor.utils.plagiarismdetector.customexception;
+
+import com.tripadvisor.utils.plagiarismdetector.Constants;
 
 public enum ErrorCodes {
 
-    INSUFFICIENT_ARGS_CODE(100, "Insufficient input. Please enter \n\t\t java <PlagiarismDetector> <file_1_path> <file_2_path> <synonym_file_path> [optional]<tuple_size>"),
-    INVALID_FILE_INPUT(101, "Invalid file path"),
-    EMPTY_FILE_CONTENT(102, "File content is empty or invalid");
-
+    INSUFFICIENT_ARGS_CODE(100, Constants.INSUFFICIENT_ARGS_DES),
+    INVALID_FILE_INPUT(101, Constants.INVALID_FILE_INPUT_DES),
+    EMPTY_FILE_CONTENT(102, Constants.EMPTY_FILE_CONTENT_DES);
     private final int errorCode;
     private final String errorDescription;
 

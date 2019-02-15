@@ -1,12 +1,13 @@
 package com.tripadvisor.utils.plagiarismdetector.services;
 
 import com.tripadvisor.utils.plagiarismdetector.Constants;
-import com.tripadvisor.utils.plagiarismdetector.CustomException.ApplicationException;
-import com.tripadvisor.utils.plagiarismdetector.CustomException.Error;
-import com.tripadvisor.utils.plagiarismdetector.CustomException.ErrorCodes;
+import com.tripadvisor.utils.plagiarismdetector.customexception.ApplicationException;
+import com.tripadvisor.utils.plagiarismdetector.customexception.Error;
+import com.tripadvisor.utils.plagiarismdetector.customexception.ErrorCodes;
 import com.tripadvisor.utils.plagiarismdetector.pojo.NTuple;
 import com.tripadvisor.utils.plagiarismdetector.pojo.UserInputInfo;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -15,9 +16,10 @@ import java.util.Set;
 public class DetectorService {
     private String[] userInput;
 
+    private Map<String, Set<String>> synonMap;
     private List<NTuple> baseFileNTuples;
     private List<NTuple> comparisonFileNTuples;
-    private Map<String, Set<String>> synonMap;
+
     private UserInputInfo userInputInfo;
 
     /**
@@ -28,6 +30,10 @@ public class DetectorService {
         if (userInput.length < Constants.MIN_NUM_USER_INPUT) {
             Error error = new Error(ErrorCodes.INSUFFICIENT_ARGS_CODE.getErrorCode(), ErrorCodes.INSUFFICIENT_ARGS_CODE.getErrorDescription());
             throw new ApplicationException(error);
+        } else if (userInput.length == Constants.MIN_NUM_USER_INPUT) {
+            System.out.println(new StringBuilder().append(Constants.DEFAULT_TUPLE_SIZE_MSG).append(Constants.DEFAULT_TUPLE_SIZE));
+        } else if (userInput.length > Constants.MIN_NUM_USER_INPUT + 1) {
+            System.out.println(Constants.EXTRA_INPUT_MSG);
         }
     }
 
@@ -42,8 +48,8 @@ public class DetectorService {
     private boolean isNTupleContentPlagiarised(NTuple baseNTuple, NTuple comparisionNTuple) {
 
         for (int tupleIndex = 0; tupleIndex < baseNTuple.getTupleSize(); tupleIndex++) {
-            String baseWord = baseNTuple.getWord(tupleIndex);
-            String comparisionWord = comparisionNTuple.getWord(tupleIndex);
+            String baseWord = baseNTuple.getWordAtIndex(tupleIndex);
+            String comparisionWord = comparisionNTuple.getWordAtIndex(tupleIndex);
 
             if (!baseWord.equals(comparisionWord)) {
                 Set<String> baseWordSyns = synonMap.get(baseWord);
@@ -58,8 +64,7 @@ public class DetectorService {
     }
 
     /**
-     * 1. Initialise all tuples in specified length and genrate Synonyms 2. Throw exception if any
-     * of the files is empty
+     * 1. Initialise N-tuples-1, NTuple -2 for specified length and generate Synonyms
      */
 
     public void generateNTuples() throws ApplicationException {
@@ -68,23 +73,25 @@ public class DetectorService {
         baseFileNTuples = tupleService.generateNTuple(userInputInfo.getBaseFileName(), userInputInfo.getTupleSize());
         comparisonFileNTuples = tupleService.generateNTuple(userInputInfo.getComparisionFileName(), userInputInfo.getTupleSize());
         synonMap = tupleService.generateSynonyms(userInputInfo.getSynonymsFileName());
-        System.out.println("synonMap" + synonMap);
-
-        if (baseFileNTuples.size() == 0 || comparisonFileNTuples.size() == 0 || synonMap.isEmpty()) {
-            Error error = new Error(ErrorCodes.EMPTY_FILE_CONTENT.getErrorCode(), ErrorCodes.EMPTY_FILE_CONTENT.getErrorDescription());
-            throw new ApplicationException(error);
-        }
     }
 
     /**
-     * 1. Check if N-Tuple group of base file and comparision file are similar or not 2. Take
-     * consideration of Synonym Map
+     * 1. Check if N-Tuple group of base file and comparision file are similar or not 2. with
+     * Synonym Map in consideration
      *
-     * plagiarisedContentCount :  gets incremented by one of 2 N-tuple  are same after replacing
+     * plagiarisedContentCount :  gets incremented by one iff 2 N-tuples  are same after replacing
      * unmatched words with synonyms
      */
 
     public void analyseContentForPlagiarism() {
+        double contentSimilarityPercentage = 0.0;
+        if (baseFileNTuples.size() > 0 && comparisonFileNTuples.size() > 0 && !synonMap.isEmpty()) {
+            contentSimilarityPercentage = (double) (getPlagiarisedNTupleCount() * 100) / (baseFileNTuples.size());
+        }
+        System.out.println("Plagiarised Content " + new DecimalFormat("##.##").format(contentSimilarityPercentage) + " %");
+    }
+
+    private double getPlagiarisedNTupleCount() {
         int plagiarisedContentCount = 0;
         for (int baseTupleIdx = 0; baseTupleIdx < baseFileNTuples.size(); baseTupleIdx++) {
             for (int comparisonTupleIndex = 0; comparisonTupleIndex < comparisonFileNTuples.size(); comparisonTupleIndex++) {
@@ -94,8 +101,7 @@ public class DetectorService {
                 }
             }
         }
-        double contentSimilarityPercentage = (plagiarisedContentCount * 100) / (baseFileNTuples.size());
-        System.out.println("plagiarism content  % " + contentSimilarityPercentage + " baseFileNTuples.size()" + baseFileNTuples.size());
+        return plagiarisedContentCount;
     }
 
     /**
@@ -119,9 +125,9 @@ public class DetectorService {
      */
     public void createUserInputInfo() {
         userInputInfo = new UserInputInfo();
-        userInputInfo.setBaseFileName(userInput[0]);
-        userInputInfo.setComparisionFileName(userInput[1]);
-        userInputInfo.setSynonymsFileName(userInput[2]);
+        userInputInfo.setSynonymsFileName(userInput[0]);
+        userInputInfo.setBaseFileName(userInput[1]);
+        userInputInfo.setComparisionFileName(userInput[2]);
         userInputInfo.setTupleSize(getValidTupleSize());
     }
 

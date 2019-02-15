@@ -1,6 +1,6 @@
 package com.tripadvisor.utils.plagiarismdetector;
 
-import com.tripadvisor.utils.plagiarismdetector.CustomException.ApplicationException;
+import com.tripadvisor.utils.plagiarismdetector.customexception.ApplicationException;
 import com.tripadvisor.utils.plagiarismdetector.interfaces.Detector;
 import com.tripadvisor.utils.plagiarismdetector.services.DetectorService;
 
@@ -8,6 +8,13 @@ public class PlagiarismDetector extends Detector {
     String[] userInput;
     DetectorService detectorService;
 
+    /**
+     * This project can be easily extended to create RESTful API for our website where we take
+     * input(in Spring Boot
+     *
+     * @RequestBody UserInputInfo (POST Request) or @PathVariable(@Get Request) and return the
+     * similarity percentage and tuples which were matched.
+     */
 
     public static void main(String args[]) {
         try {
@@ -18,7 +25,8 @@ public class PlagiarismDetector extends Detector {
 
         } catch (ApplicationException appException) {
             System.out.println(Constants.ERROR_MESSAGE_HEADING);
-            System.out.println(appException.getErrorCode() + " --" + appException.getErrorMessage());
+            System.err.println(appException.getErrorCode() + " --" + appException.getErrorMessage());
+            System.exit(-1);
         }
     }
 
