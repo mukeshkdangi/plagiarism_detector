@@ -9,7 +9,7 @@ public enum ErrorCodes {
     private final int errorCode;
     private final String errorDescription;
 
-    private ErrorCodes(int code, String errorDescription) {
+    ErrorCodes(int code, String errorDescription) {
         this.errorCode = code;
         this.errorDescription = errorDescription;
     }

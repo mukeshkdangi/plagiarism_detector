@@ -8,6 +8,7 @@ public class PlagiarismDetector extends Detector {
     String[] userInput;
     DetectorService detectorService;
 
+
     public static void main(String args[]) {
         try {
             PlagiarismDetector plagiarismDetector = new PlagiarismDetector(args);
@@ -26,7 +27,6 @@ public class PlagiarismDetector extends Detector {
         detectorService = new DetectorService(getUserInput());
         detectorService.validateUserInput();
         detectorService.createUserInputInfo();
-
     }
 
     @Override
@@ -35,9 +35,10 @@ public class PlagiarismDetector extends Detector {
     }
 
     @Override
-    public void postProcess() throws ApplicationException {
+    public void postProcess() {
         detectorService.analyseContentForPlagiarism();
     }
+
 
     public String[] getUserInput() {
         return userInput;

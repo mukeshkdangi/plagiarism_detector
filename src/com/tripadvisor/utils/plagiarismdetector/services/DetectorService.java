@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class DetectorService {
     private String[] userInput;
@@ -26,10 +25,36 @@ public class DetectorService {
      */
 
     public void validateUserInput() throws ApplicationException {
-        if (userInput.length < Constants.NUM_USER_INPUT - 1) {
+        if (userInput.length < Constants.MIN_NUM_USER_INPUT) {
             Error error = new Error(ErrorCodes.INSUFFICIENT_ARGS_CODE.getErrorCode(), ErrorCodes.INSUFFICIENT_ARGS_CODE.getErrorDescription());
             throw new ApplicationException(error);
         }
+    }
+
+    /**
+     * return false if 1.  no synonym found for any of the word or synonym list 2. intersection of
+     * two set did not result in a single synonym matched
+     *
+     * @param baseNTuple        : N-Tuples from base File(file One)
+     * @param comparisionNTuple : N-Tuples from comparision file (file two)
+     * @return : True/False if 2 N-tuple  are same after replacing unmatched words with synonyms
+     */
+    private boolean isNTupleContentPlagiarised(NTuple baseNTuple, NTuple comparisionNTuple) {
+
+        for (int tupleIndex = 0; tupleIndex < baseNTuple.getTupleSize(); tupleIndex++) {
+            String baseWord = baseNTuple.getWord(tupleIndex);
+            String comparisionWord = comparisionNTuple.getWord(tupleIndex);
+
+            if (!baseWord.equals(comparisionWord)) {
+                Set<String> baseWordSyns = synonMap.get(baseWord);
+                Set<String> comparisionWordSyns = synonMap.get(comparisionWord);
+                if (Objects.isNull(baseWordSyns) || Objects.isNull(comparisionWordSyns))
+                    return false;
+                baseWordSyns.retainAll(comparisionWordSyns);
+                if (baseWordSyns.size() <= 0) return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -63,55 +88,18 @@ public class DetectorService {
         int plagiarisedContentCount = 0;
         for (int baseTupleIdx = 0; baseTupleIdx < baseFileNTuples.size(); baseTupleIdx++) {
             for (int comparisonTupleIndex = 0; comparisonTupleIndex < comparisonFileNTuples.size(); comparisonTupleIndex++) {
-
-                List<String> items = baseFileNTuples.get(baseTupleIdx).getWordsInTuple();
-                List<String> items2 = comparisonFileNTuples.get(comparisonTupleIndex).getWordsInTuple();
-                String list = items.stream().map(String::toString).collect(Collectors.joining(","));
-                String list1 = items2.stream().map(String::toString).collect(Collectors.joining(","));
-
-                System.out.println("Going for  tuple is " + list + "  $$$ " + list1);
-
                 if (isNTupleContentPlagiarised(baseFileNTuples.get(baseTupleIdx), comparisonFileNTuples.get(comparisonTupleIndex))) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    System.out.println("Matched");
                     plagiarisedContentCount++;
                     break;
                 }
-
             }
         }
-
-        System.out.println("plagiarism content  % " + (plagiarisedContentCount * 100) / (baseFileNTuples.size()) + " baseFileNTuples.size()" + baseFileNTuples.size());
+        double contentSimilarityPercentage = (plagiarisedContentCount * 100) / (baseFileNTuples.size());
+        System.out.println("plagiarism content  % " + contentSimilarityPercentage + " baseFileNTuples.size()" + baseFileNTuples.size());
     }
 
-
     /**
-     * @param baseNTuple        : N-Tuples from base File(file One)
-     * @param comparisionNTuple : N-Tuples from comparision file (file two)
-     * @return : True/False if 2 N-tuple  are same after replacing unmatched words with synonyms
-     */
-    private boolean isNTupleContentPlagiarised(NTuple baseNTuple, NTuple comparisionNTuple) {
-
-        for (int tupleIndex = 0; tupleIndex < baseNTuple.getTupleSize(); tupleIndex++) {
-            String baseWord = baseNTuple.getWord(tupleIndex);
-            String comparisionWord = comparisionNTuple.getWord(tupleIndex);
-
-            if (!baseWord.equals(comparisionWord)) {
-                Set<String> baseWordSyns = synonMap.get(baseWord);
-                Set<String> comparisionWordSyns = synonMap.get(comparisionWord);
-                // return false if no synonym found for any of the word or synonym list did
-                if (Objects.isNull(baseWordSyns) || Objects.isNull(comparisionWordSyns))
-                    return false;
-                baseWordSyns.retainAll(comparisionWordSyns);
-                if (baseWordSyns.size() <= 0) return false;
-            }
-        }
-        return true;
-    }
-
-
-    /**
-     * Check if user input is valid
+     * Check if user input length is valid
      *
      * @return default if 1. invalid or negative input  or 2. entered input tuple size
      */
@@ -119,7 +107,7 @@ public class DetectorService {
     private int getValidTupleSize() {
         int tupleSize = Constants.DEFAULT_TUPLE_SIZE;
         try {
-            tupleSize = userInput.length > 3 ? Integer.parseInt(userInput[3]) : tupleSize;
+            tupleSize = userInput.length > Constants.MIN_NUM_USER_INPUT ? Integer.parseInt(userInput[3]) : tupleSize;
         } catch (NumberFormatException e) {
             System.out.println(Constants.TUPLE_NUMBER_ERROR);
         }

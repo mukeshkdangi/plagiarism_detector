@@ -53,7 +53,13 @@ public class TupleService {
         return tuples;
     }
 
-
+    /**
+     * Returns synonyms for each word in line. This function handles words if they even appears in
+     * multiple Synonym lines
+     *
+     * @param fileName : File which contains Synonym lines
+     * @return : key : word, value: set of Synonyms of key
+     */
     public Map<String, Set<String>> generateSynonyms(String fileName) throws ApplicationException {
         Map<String, Set<String>> synonyMap = new HashMap<>();
 
@@ -87,6 +93,9 @@ public class TupleService {
      * Note : Assuming file has alpha numeric entries. no  [.,?!;:.()[]{}] etc otherwise we have to
      * add one more line to replace invalid character "jog," and "jog"
      *
+     * In Case of STOP Words at the end of word, we need to replace it. Assuming we have valid words
+     * without stop-words.
+     *
      * @param line : line in file
      * @return List of Tuple with requested tuple size
      */
@@ -94,10 +103,7 @@ public class TupleService {
     private List<NTuple> getTuplesForLine(String line, int tupleSize) {
 
         List<NTuple> tuples = new ArrayList<>();
-        /*
-        In Case of STOP Words at the end of word, we need to replace it.
-        Assuming we have valid words without stop-words.
-        */
+
         String[] totalWordsInLine = line.split(Constants.WORD_SEPRATOR);
         if (totalWordsInLine.length < tupleSize) return tuples;
 
