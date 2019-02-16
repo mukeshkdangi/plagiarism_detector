@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="641ef012-2a0d-466e-ab21-68f61e65c108" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlagiarismDetector/com/tripadvisor/utils/plagiarismdetector/services/DetectorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlagiarismDetector/com/tripadvisor/utils/plagiarismdetector/services/DetectorService.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,8 +21,8 @@
       <file leaf-file-name="DetectorService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tripadvisor/utils/plagiarismdetector/services/DetectorService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="81">
+              <caret line="80" column="6" lean-forward="true" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1023#1617#0" expanded="true" />
@@ -411,15 +412,16 @@
       <workItem from="1550117823691" duration="29429000" />
       <workItem from="1550193639572" duration="1036000" />
       <workItem from="1550194789807" duration="568000" />
-      <workItem from="1550195795228" duration="2495000" />
+      <workItem from="1550195795228" duration="3907000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33528000" />
+    <option name="totallyTimeSpent" value="34940000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1379" height="873" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -998,8 +1000,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tripadvisor/utils/plagiarismdetector/services/DetectorService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        <state relative-caret-position="81">
+          <caret line="80" column="6" lean-forward="true" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1023#1617#0" expanded="true" />
