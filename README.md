@@ -38,8 +38,8 @@ N     : tuple size
 		- Reading synonym file and generating synonym map<word:sysnonym_set> for each word
 		-  
 	iii) Post Processing: Here, we are checking each N-Tuple from base file to comparison file and a matching is considered iff each word/synonyms from N-Tuple-1(file1) is equal to N-Tuple-2(file2) word/synonyms. If words are not matching then we are taking intersection of two Synonym sets of word from N-Tuple-1 and word from N-Tuple-2. if intersection is greater than one that mean those two words are synonym. 
-2. Clear segregation/grouping of files: Services, POJOs, Exception, Interfaces, Constants etc.
-3. Exception Handling: We are throwing custom errors from each (pre-processing, processing and post-processing) and catching them in PlagiarismDetector controller to print the error code and error description. 
+> 2. Clear segregation/grouping of files: Services, POJOs, Exception, Interfaces, Constants etc.
+> 3. Exception Handling: We are throwing custom errors from each (pre-processing, processing and post-processing) and catching them in PlagiarismDetector controller to print the error code and error description. 
 
 ## Running the code:
 
@@ -47,23 +47,23 @@ N     : tuple size
 Run     : ```java <main_function()_file_with_package_structure> <Synonym_file> <file_1_path> <file_2_path> [tupe_size]```
  
 
-For example: ```java com.tripadvisor.utils.plagiarismdetector.PlagiarismDetector /Users/mukesh/Desktop/syns.txt /Users/mukesh/Desktop/file1.txt  /Users/mukesh/Desktop/file2.txt 3```
+> For example: ```java com.tripadvisor.utils.plagiarismdetector.PlagiarismDetector /Users/mukesh/Desktop/syns.txt /Users/mukesh/Desktop/file1.txt  /Users/mukesh/Desktop/file2.txt 3```
 
 ## Assumptions:
 > 1. File content is valid i.e. special characters(',', '.', ';' etc) should be removed prior to building N-Tuple. For example "run for hours." and "run for hours" wouldn't match unless we remove "comma(,) from tuple 1"
 
-2. File size fits into RAM for processing.
-3. Two Tuple(from file1 and file2 respectively) are considered plagiarised only iff words or their corresponding synonyms are equal. 
-4. If requested tuple size is more than length is line a file, then ignoring that line for plagiarism check.
+> 2. File size fits into RAM for processing.
+> 3. Two Tuple(from file1 and file2 respectively) are considered plagiarised only iff words or their corresponding synonyms are equal. 
+> 4. If requested tuple size is more than length is line a file, then ignoring that line for plagiarism check.
 
 
 ## Future Improvements: 
 > This code can be easily extended to create RESTful API where we take input(in Spring Boot @RequestBody(POST Request) or @PathVariable(@Get Request) and return the similarity percentage and tuples where content is matched. 
 
-1. We can use logger(log4j, slf4j) to better logging like WARN, ERROR etc.
-2. We can use lombok project annotation(@Getter, @Setter, @Data etc) for better code readability in POJOs.
-3. Take into consideration of stop words and remove them before generating NTuple or synonym map
-4. Use of Spring boot framework for dependency injection(@Autowired) and more code decoupling.
-5. Takes care of files which are very big(GBs) by some concepts like pagination apart from using streams than a buffer.  
-6. Take more than one file as base file (real word scenarios like web has millions of URL/files) and then compare a new against our web crawled files. 
-7. Other language support where we have  different style(right-to-left).
+> 1. We can use logger(log4j, slf4j) to better logging like WARN, ERROR etc.
+> 2. We can use lombok project annotation(@Getter, @Setter, @Data etc) for better code readability in POJOs.
+> 3. Take into consideration of stop words and remove them before generating NTuple or synonym map
+> 4. Use of Spring boot framework for dependency injection(@Autowired) and more code decoupling.
+> 5. Takes care of files which are very big(GBs) by some concepts like pagination apart from using streams than a buffer.  
+> 6. Take more than one file as base file (real word scenarios like web has millions of URL/files) and then compare a new against our web crawled files. 
+> 7. Other language support where we have  different style(right-to-left).
