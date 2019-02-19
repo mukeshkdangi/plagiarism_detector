@@ -13,10 +13,10 @@ file2, where the tuples are compared by accounting for synonyms as described abo
 
 The output of the program should be the percent of tuples in file1 which appear in file2.  So for the above example, the output would be one line saying &quot;100%&quot;.  In another example, for texts &quot;go for a run&quot; and &quot;went for a jog&quot; and N=3 we would output &quot;50%&quot; because only one 3-tuple in the first text appears in the second one.
 
-`` Example inputs from above:
+``Example inputs from above:
 syns.txt: run sprint jog
 file1.txt: go for a run
-file2.txt: go for a jog ```
+file2.txt: go for a jog `
 Sample output for above inputs:
   100%
 
@@ -31,7 +31,7 @@ file3 : Synonym file
 N     : tuple size
 
 ## Design Decisions:
-1. PlagiarismDetector is the controller of the whole task ans responsible for following subtasks:
+> 1. PlagiarismDetector is the controller of the whole task ans responsible for following subtasks:
 	i)  Pre-Processing (user input info object and validation)
 	ii) Processing 
 		- Reading all three files and generating N-tuples <tuples_of_size_N> from first two files.
@@ -43,14 +43,14 @@ N     : tuple size
 
 ## Running the code:
 
-Compile : ```javac *java ``` or Ctrl + B(Win) or Command + B (Mac OS)  
+> Compile : ```javac *java ``` or Ctrl + B(Win) or Command + B (Mac OS)  
 Run     : ```java <main_function()_file_with_package_structure> <Synonym_file> <file_1_path> <file_2_path> [tupe_size]```
  
 
 For example: ```java com.tripadvisor.utils.plagiarismdetector.PlagiarismDetector /Users/mukesh/Desktop/syns.txt /Users/mukesh/Desktop/file1.txt  /Users/mukesh/Desktop/file2.txt 3```
 
 ## Assumptions:
-1. File content is valid i.e. special characters(',', '.', ';' etc) should be removed prior to building N-Tuple. For example "run for hours." and "run for hours" wouldn't match unless we remove "comma(,) from tuple 1"
+> 1. File content is valid i.e. special characters(',', '.', ';' etc) should be removed prior to building N-Tuple. For example "run for hours." and "run for hours" wouldn't match unless we remove "comma(,) from tuple 1"
 
 2. File size fits into RAM for processing.
 3. Two Tuple(from file1 and file2 respectively) are considered plagiarised only iff words or their corresponding synonyms are equal. 
@@ -58,7 +58,7 @@ For example: ```java com.tripadvisor.utils.plagiarismdetector.PlagiarismDetector
 
 
 ## Future Improvements: 
-This code can be easily extended to create RESTful API where we take input(in Spring Boot @RequestBody(POST Request) or @PathVariable(@Get Request) and return the similarity percentage and tuples where content is matched. 
+> This code can be easily extended to create RESTful API where we take input(in Spring Boot @RequestBody(POST Request) or @PathVariable(@Get Request) and return the similarity percentage and tuples where content is matched. 
 
 1. We can use logger(log4j, slf4j) to better logging like WARN, ERROR etc.
 2. We can use lombok project annotation(@Getter, @Setter, @Data etc) for better code readability in POJOs.
