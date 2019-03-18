@@ -43,11 +43,17 @@ N     : tuple size
 
 ## Running the code:
 
-> Compile : ```javac *java ``` or Ctrl + B(Win) or Command + B (Mac OS)  
-Run     : ```java <main_function()_file_with_package_structure> <Synonym_file> <file_1_path> <file_2_path> [tupe_size]```
+> Compile : ```Java 
+javac *java 
+``` or Ctrl + B(Win) or Command + B (Mac OS)  
+Run     : ```Java
+java <main_function()_file_with_package_structure> <Synonym_file> <file_1_path> <file_2_path> [tupe_size]
+```
  
 
-> For example: ```java com.tripadvisor.utils.plagiarismdetector.PlagiarismDetector /Users/mukesh/Desktop/syns.txt /Users/mukesh/Desktop/file1.txt  /Users/mukesh/Desktop/file2.txt 3```
+> For example: ```Java
+java com.tripadvisor.utils.plagiarismdetector.PlagiarismDetector /Users/mukesh/Desktop/syns.txt /Users/mukesh/Desktop/file1.txt  /Users/mukesh/Desktop/file2.txt 3
+```
 
 ## Assumptions:
 > 1. File content is valid i.e. special characters(',', '.', ';' etc) should be removed prior to building N-Tuple. For example "run for hours." and "run for hours" wouldn't match unless we remove "comma(,) from tuple 1"
