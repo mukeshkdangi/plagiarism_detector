@@ -13,10 +13,10 @@ file2, where the tuples are compared by accounting for synonyms as described abo
 
 The output of the program should be the percent of tuples in file1 which appear in file2.  So for the above example, the output would be one line saying &quot;100%&quot;.  In another example, for texts &quot;go for a run&quot; and &quot;went for a jog&quot; and N=3 we would output &quot;50%&quot; because only one 3-tuple in the first text appears in the second one.
 
-``Example inputs from above:
+> Example inputs from above:
 syns.txt: run sprint jog
 file1.txt: go for a run
-file2.txt: go for a jog `
+file2.txt: go for a jog 
 Sample output for above inputs:
   100%
 
@@ -43,15 +43,20 @@ N     : tuple size
 
 ## Running the code:
 
-> Compile : ```Java 
+> Compile : 
+
+```C++ 
 javac *java 
-``` or Ctrl + B(Win) or Command + B (Mac OS)  
-Run     : ```Java
+``` 
+or Ctrl + B(Win) or Command + B (Mac OS)  
+Run     : 
+```C++
 java <main_function()_file_with_package_structure> <Synonym_file> <file_1_path> <file_2_path> [tupe_size]
 ```
  
 
-> For example: ```Java
+> For example: 
+```C++
 java com.tripadvisor.utils.plagiarismdetector.PlagiarismDetector /Users/mukesh/Desktop/syns.txt /Users/mukesh/Desktop/file1.txt  /Users/mukesh/Desktop/file2.txt 3
 ```
 
